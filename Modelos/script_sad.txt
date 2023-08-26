@@ -1,0 +1,44 @@
+CREATE TABLE dim_tempo(
+    id SERIAL PRIMARY KEY,
+    ano VARCHAR(4),
+    mes VARCHAR(2),
+    ano_mes VARCHAR(7)
+);
+
+CREATE TABLE dim_transacao(
+    id SERIAL PRIMARY KEY,
+    tipo_transacao VARCHAR(92)
+);
+
+CREATE TABLE dim_fornecedor(
+    id SERIAL PRIMARY KEY,
+    cnpj VARCHAR(14),
+    nome VARCHAR(100)
+);
+
+CREATE TABLE dim_orgao(
+    id SERIAL PRIMARY KEY,
+	codigo_orgao_superior VARCHAR(10),
+	nome_orgao_superior VARCHAR(90),
+	codigo_orgao VARCHAR(10),
+	nome_orgao VARCHAR(92),
+	codigo_unidade_gestora VARCHAR(10),
+	nome_unidade_gestora VARCHAR(92)
+);
+
+CREATE TABLE fato (
+    id_tempo INT,
+    id_transacao INT,
+    id_fornecedor INT,
+    id_orgao INT,
+    valor DECIMAL,
+    CONSTRAINT pk_fato PRIMARY KEY (id_tempo, id_transacao, id_fornecedor, id_orgao)
+);
+
+CREATE TABLE dim_presidente(
+    id SERIAL PRIMARY KEY,
+    presidente VARCHAR(50),
+	vice_presidente VARCHAR(50),
+	id_tempo int NOT NULL,
+	FOREIGN KEY (id_tempo) REFERENCES dim_tempo (id)
+);
